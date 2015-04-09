@@ -36,3 +36,6 @@ C:\_CETI_Ingenieria\6° Semestre\Sistemas Expertos\RulesDef_Dic\RulesDef_Dic\obj
 C:\_CETI_Ingenieria\6° Semestre\Sistemas Expertos\RulesDef_Dic\RulesDef_Dic\obj\Debug\RulesDef_Dic.exe
 C:\_CETI_Ingenieria\6° Semestre\Sistemas Expertos\RulesDef_Dic\RulesDef_Dic\obj\Debug\RulesDef_Dic.pdb
 C:\_CETI_Ingenieria\6° Semestre\Sistemas Expertos\RulesDef_Dic\RulesDef_Dic\obj\Debug\RulesDef_Dic.csprojResolveAssemblyReference.cache
+H:\Repos\Ceti_Ingenieria\RulesDef_Dic\RulesDef_Dic\bin\Debug\RulesDef_Dic.exe.config
+H:\Repos\Ceti_Ingenieria\RulesDef_Dic\RulesDef_Dic\obj\Debug\RulesDef_Dic.exe
+H:\Repos\Ceti_Ingenieria\RulesDef_Dic\RulesDef_Dic\obj\Debug\RulesDef_Dic.pdb
