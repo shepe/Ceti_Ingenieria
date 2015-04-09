@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="RulesModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+  <EntityContainer Name="RulesModelContainer" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="DictionarySet" EntityType="RulesModel.Dictionary" />
+    <EntitySet Name="RulesSet" EntityType="RulesModel.Rules" />
+    <EntitySet Name="RulesDefSet" EntityType="RulesModel.RulesDef" />
+    <AssociationSet Name="Rules_RulesDef" Association="RulesModel.Rules_RulesDef">
+      <End Role="Rules" EntitySet="RulesSet" />
+      <End Role="RulesDef" EntitySet="RulesDefSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Dictionary">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PropAtm" Type="String" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Rules">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Result" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="RulesDef" Relationship="RulesModel.Rules_RulesDef" FromRole="Rules" ToRole="RulesDef" />
+  </EntityType>
+  <EntityType Name="RulesDef">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Prop" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Rules" Relationship="RulesModel.Rules_RulesDef" FromRole="RulesDef" ToRole="Rules" />
+    <Property Name="RulesId" Type="Int32" Nullable="false" />
+  </EntityType>
+  <Association Name="Rules_RulesDef">
+    <End Type="RulesModel.Rules" Role="Rules" Multiplicity="1" />
+    <End Type="RulesModel.RulesDef" Role="RulesDef" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rules">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RulesDef">
+        <PropertyRef Name="RulesId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

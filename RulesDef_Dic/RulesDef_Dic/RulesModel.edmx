@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="RulesModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="RulesModelStoreContainer">
+    <EntitySet Name="DictionarySet" EntityType="RulesModel.Store.DictionarySet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="RulesSet" EntityType="RulesModel.Store.RulesSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="RulesDefSet" EntityType="RulesModel.Store.RulesDefSet" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="Rules_RulesDef" Association="RulesModel.Store.Rules_RulesDef">
+      <End Role="Rules" EntitySet="RulesSet" />
+      <End Role="RulesDef" EntitySet="RulesDefSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="DictionarySet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PropAtm" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RulesSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Result" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RulesDefSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Prop" Type="int" Nullable="false" />
+    <Property Name="RulesId" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="Rules_RulesDef">
+    <End Role="Rules" Type="RulesModel.Store.RulesSet" Multiplicity="1" />
+    <End Role="RulesDef" Type="RulesModel.Store.RulesDefSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rules">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RulesDef">
+        <PropertyRef Name="RulesId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="RulesModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="RulesModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="DictionarySet" EntityType="RulesModel.Dictionary" />
+          <EntitySet Name="RulesSet" EntityType="RulesModel.Rules" />
+          <EntitySet Name="RulesDefSet" EntityType="RulesModel.RulesDef" />
+          <AssociationSet Name="Rules_RulesDef" Association="RulesModel.Rules_RulesDef">
+            <End Role="Rules" EntitySet="RulesSet" />
+            <End Role="RulesDef" EntitySet="RulesDefSet" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Dictionary">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PropAtm" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Rules">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Result" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="RulesDef" Relationship="RulesModel.Rules_RulesDef" FromRole="Rules" ToRole="RulesDef" />
+        </EntityType>
+        <EntityType Name="RulesDef">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Prop" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Rules" Relationship="RulesModel.Rules_RulesDef" FromRole="RulesDef" ToRole="Rules" />
+          <Property Name="RulesId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="Rules_RulesDef">
+          <End Type="RulesModel.Rules" Role="Rules" Multiplicity="1" />
+          <End Type="RulesModel.RulesDef" Role="RulesDef" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rules">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RulesDef">
+              <PropertyRef Name="RulesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="RulesModelStoreContainer" CdmEntityContainer="RulesModelContainer">
+    <EntitySetMapping Name="DictionarySet">
+      <EntityTypeMapping TypeName="IsTypeOf(RulesModel.Dictionary)">
+        <MappingFragment StoreEntitySet="DictionarySet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="PropAtm" ColumnName="PropAtm" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RulesSet">
+      <EntityTypeMapping TypeName="IsTypeOf(RulesModel.Rules)">
+        <MappingFragment StoreEntitySet="RulesSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Result" ColumnName="Result" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RulesDefSet">
+      <EntityTypeMapping TypeName="IsTypeOf(RulesModel.RulesDef)">
+        <MappingFragment StoreEntitySet="RulesDefSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Prop" ColumnName="Prop" />
+          <ScalarProperty Name="RulesId" ColumnName="RulesId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

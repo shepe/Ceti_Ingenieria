@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="RulesModelStoreContainer" CdmEntityContainer="RulesModelContainer">
+    <EntitySetMapping Name="DictionarySet">
+      <EntityTypeMapping TypeName="IsTypeOf(RulesModel.Dictionary)">
+        <MappingFragment StoreEntitySet="DictionarySet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="PropAtm" ColumnName="PropAtm" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RulesSet">
+      <EntityTypeMapping TypeName="IsTypeOf(RulesModel.Rules)">
+        <MappingFragment StoreEntitySet="RulesSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Result" ColumnName="Result" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RulesDefSet">
+      <EntityTypeMapping TypeName="IsTypeOf(RulesModel.RulesDef)">
+        <MappingFragment StoreEntitySet="RulesDefSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Prop" ColumnName="Prop" />
+          <ScalarProperty Name="RulesId" ColumnName="RulesId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="RulesModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="RulesModelStoreContainer">
+    <EntitySet Name="DictionarySet" EntityType="RulesModel.Store.DictionarySet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="RulesSet" EntityType="RulesModel.Store.RulesSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="RulesDefSet" EntityType="RulesModel.Store.RulesDefSet" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="Rules_RulesDef" Association="RulesModel.Store.Rules_RulesDef">
+      <End Role="Rules" EntitySet="RulesSet" />
+      <End Role="RulesDef" EntitySet="RulesDefSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="DictionarySet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PropAtm" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RulesSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Result" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RulesDefSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Prop" Type="int" Nullable="false" />
+    <Property Name="RulesId" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="Rules_RulesDef">
+    <End Role="Rules" Type="RulesModel.Store.RulesSet" Multiplicity="1" />
+    <End Role="RulesDef" Type="RulesModel.Store.RulesDefSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rules">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RulesDef">
+        <PropertyRef Name="RulesId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
