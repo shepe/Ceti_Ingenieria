@@ -74,6 +74,11 @@ namespace RulesDef_Dic
             //cont = 0;
                 try
                 {
+                    while (ContentTree.ElementAt(ite).LevelDependencies.Count == 0)
+                    {
+                        ite++;
+                    }
+                    //ite++;
                     GenTree(listall, ContentTree.ElementAt(ite++).LevelDependencies, rev);
                 }
                 catch (Exception error)
