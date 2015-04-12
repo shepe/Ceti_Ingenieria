@@ -564,9 +564,85 @@ namespace RulesDef_Dic
                     lstQuestionOrder.Items.Add(ConvertToString(item.Prop) + " = " + ((item.Value > 0)?"Verdadero":"Falso"));
                 }
 
+                for (int i = RulesFired.Count - 1; i >= 0; i--)
+                {
+                    explainRule(RulesFired.ElementAt(i), ValuesList);
+                }
+
+                lstExplanation.Items.Add("\n");
+
+                foreach (var item in ValuesList)
+                {
+                    if (item.Who == "Tu me dijiste que ")
+                    {
+                        lstExplanation.Items.Add(item.Who + ConvertToString(item.Prop) + ((item.Value > 0) ? " Verdadero" : " Falso"));
+                    }
+                }
+
             }
             else
                 MessageBox.Show("Primero seleccione lo que va a ingresar");
+        }
+
+        private void explainRule(RulesClass rule, List<PropValue> ValuesList)
+        {
+            foreach (var item in ValuesList)
+            {
+                if (item.Prop == Math.Abs(rule.list[0]))
+                {
+                        lstExplanation.Items.Add(item.Who + ConvertToString(item.Prop) + ((item.Value > 0) ? " Verdadero" : " Falso") + " PORQUE:");
+                        setRules(rule);
+                }
+            }
+        }
+
+        private void setRules(RulesClass rule)
+        {
+            List<string> listProp = new List<string>();
+            int cont = 0;
+
+            using (var db = new RulesModelContainer())
+            {
+                 var query = from ru in db.RulesSet
+                            orderby ru.Id
+                            select ru;
+
+                 foreach (var item in query)
+                 {
+                     cont++;
+                     if (cont == rule.id)
+                     {
+                         listProp.Clear();
+
+                         var query2 = from r in db.RulesDefSet
+                                      orderby r.Id
+                                      where r.RulesId == item.Id
+                                      select r;
+
+                         foreach (var item2 in query2)
+                         {
+                             listProp.Add(ConvertToString(item2.Prop));
+                         }
+
+                         lstExplanation.Items.Add(RebuiltRule(listProp, ConvertToString(item.Result), 'y'));
+
+                         if (item.Result != rule.list[0])
+                         {
+                             for (int i = 0; i < listProp.Count; i++)
+                             {
+                                 if (listProp[i] == ConvertToString(rule.list[0]) || listProp[i] == ConvertToString(rule.list[0] * -1))
+                                 {
+                                     listProp.RemoveAt(i);
+                                     listProp.Add(ConvertToString(item.Result*-1));
+                                 
+                                 }
+                             }
+
+                             lstExplanation.Items.Add(RebuiltRule(listProp, ConvertToString(rule.list[0]), 'y'));
+                         }
+                     }
+                 }
+            }
         }
 
         private void GettingValues(List<PropValue> ValuesList)
@@ -616,6 +692,7 @@ namespace RulesDef_Dic
             RulesFired.Clear();
             lstTree.Items.Clear();
             lstQuestionOrder.Items.Clear();
+            lstExplanation.Items.Clear();
             ID = 0;
         }
 
