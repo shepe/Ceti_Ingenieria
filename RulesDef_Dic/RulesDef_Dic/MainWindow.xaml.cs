@@ -393,7 +393,9 @@ namespace RulesDef_Dic
 
         //public List<string> listProp = new List<string>();
         public Boolean flag = false;
-        public List<List<int>> listall = new List<List<int>>();
+        private List<RulesClass> listall = new List<RulesClass>();
+        private List<RulesClass> RulesFired = new List<RulesClass>();
+        public int ID = 0;
 
         public void fillRules()
         {
@@ -415,7 +417,7 @@ namespace RulesDef_Dic
                     }
 
                     list.Add(item.Result);
-                    listall.Add(list);
+                    listall.Add(new RulesClass(list, ++ID));
                 }
             }
         }
@@ -446,13 +448,13 @@ namespace RulesDef_Dic
         private void evalValue(int value)
         {
             List<string> listProp = new List<string>();
-            List<List<int>> temp2 = new List<List<int>>();
+            List<RulesClass> temp2 = new List<RulesClass>();
             Boolean flagy = false;
 
             foreach (var item in listall)
             {
                 listProp.Clear();
-                foreach (var item2 in item)
+                foreach (var item2 in item.list)
                 {
                     listProp.Add(ConvertToString(item2));
                     if (Math.Abs(item2) == Math.Abs(value))
@@ -472,7 +474,7 @@ namespace RulesDef_Dic
 
             foreach (var item in temp2)
             {
-                item.Remove(value*-1);
+                item.list.Remove(value*-1);
             }
 
             listall = temp2;
@@ -480,7 +482,7 @@ namespace RulesDef_Dic
             foreach (var item in listall)
             {
                 listProp.Clear();
-                foreach (var item2 in item)
+                foreach (var item2 in item.list)
                 {
                     listProp.Add(ConvertToString(item2));
                 }
@@ -503,6 +505,7 @@ namespace RulesDef_Dic
         {
             Tree mytree = new Tree(new Node(Math.Abs(ConvertToInt(cmbOProp.Text)), 1));
             string aux = "{ ";
+            List<PropValue> ValuesList = new List<PropValue>();
 
             if (cmbOProp.Text != "" && cmbOProp.SelectedIndex != 0)
             {
@@ -542,6 +545,7 @@ namespace RulesDef_Dic
                     {
                         try
                         {
+                            ValuesList.Add(new PropValue(int.Parse(item2)));
                             aux += ConvertToString(int.Parse(item2)) + " ";
                         }
                         catch (Exception err) { }
@@ -550,17 +554,69 @@ namespace RulesDef_Dic
                     lstQuestionOrder.Items.Add(aux);
                     aux = "{ ";
                 }
+
+                lstQuestionOrder.Items.Add(" \n Valores de las Proposiciones: \n ");
+
+                GettingValues(ValuesList);
+
+                foreach (var item in ValuesList)
+                {
+                    lstQuestionOrder.Items.Add(ConvertToString(item.Prop) + " = " + ((item.Value > 0)?"Verdadero":"Falso"));
+                }
+
             }
             else
                 MessageBox.Show("Primero seleccione lo que va a ingresar");
+        }
+
+        private void GettingValues(List<PropValue> ValuesList)
+        {
+            for (int i = 0; i < ValuesList.Count; i++)
+            {
+                if (ValuesList.ElementAt(i).Value == 0)
+                {
+                    MessageBoxResult result = MessageBox.Show("La premisa " + ConvertToString(ValuesList.ElementAt(i).Prop) + " es verdadera", "Preguntando por su valor", MessageBoxButton.YesNo);
+                    ValuesList.ElementAt(i).AskForValue((result == MessageBoxResult.Yes) ? true : false);
+                    ValuesList.ElementAt(i).Who = "Tu me dijiste que ";
+                }
+
+                evalValue(ValuesList.ElementAt(i).Prop * ValuesList.ElementAt(i).Value);
+                firesSomething(ValuesList);
+            }
+        }
+
+        private void firesSomething(List<PropValue> ValuesList)
+        {
+            foreach (var item in listall)
+            {
+                if(item.list.Count == 1)
+                {
+                    if(!RulesFired.Contains(item))
+                        RulesFired.Add(item);
+
+                    foreach (var item2 in ValuesList)
+                    {
+                        if (item2.Prop == Math.Abs(item.list.ElementAt(0)))
+                        {
+                            item2.AskForValue((item.list.ElementAt(0) > 0)?true:false);
+                            item2.Who = "Yo deduje que ";
+                        }
+                    }
+
+                    evalValue(item.list.ElementAt(0));
+                    firesSomething(ValuesList);
+                }
+            }
         }
 
         private void btnRestartObj_Click(object sender, RoutedEventArgs e)
         {
             flag = false;
             listall.Clear();
+            RulesFired.Clear();
             lstTree.Items.Clear();
             lstQuestionOrder.Items.Clear();
+            ID = 0;
         }
 
     }

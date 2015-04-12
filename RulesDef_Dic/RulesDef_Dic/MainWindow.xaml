@@ -77,8 +77,12 @@
                     <Button x:Name="btnInObj" Content="Ingresar" HorizontalAlignment="Left" Margin="682,31,0,0" VerticalAlignment="Top" Width="80" Click="btnInObj_Click"/>
                     <Button x:Name="btnRefresh3" Content="Refresh" HorizontalAlignment="Left" Margin="502,31,0,0" VerticalAlignment="Top" Width="75" Click="btnRefresh2_Click"/>
                     <Button x:Name="btnRestartObj" Content="Reiniciar" HorizontalAlignment="Left" Margin="591,31,0,0" VerticalAlignment="Top" Width="75" Click="btnRestartObj_Click"/>
-                    <ListBox x:Name="lstQuestionOrder" HorizontalAlignment="Left" Height="172" Margin="10,333,0,0" VerticalAlignment="Top" Width="752"/>
-                    <ListBox x:Name="lstTree" HorizontalAlignment="Left" Height="227" Margin="10,85,0,0" VerticalAlignment="Top" Width="752"/>
+                    <ListBox x:Name="lstQuestionOrder" HorizontalAlignment="Left" Height="172" Margin="10,350,0,0" VerticalAlignment="Top" Width="300"/>
+                    <ListBox x:Name="lstTree" HorizontalAlignment="Left" Height="227" Margin="10,85,0,0" VerticalAlignment="Top" Width="300"/>
+                    <ListBox x:Name="lstExplanation" HorizontalAlignment="Left" Height="437" Margin="341,85,0,0" VerticalAlignment="Top" Width="421"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="10,64,0,0" TextWrapping="Wrap" Text="Desarrollo del Arbol" VerticalAlignment="Top"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="10,329,0,0" TextWrapping="Wrap" Text="Orden a preguntar y su valor (1 / 0)" VerticalAlignment="Top"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="341,64,0,0" TextWrapping="Wrap" Text="Explicación" VerticalAlignment="Top"/>
 
                 </Grid>
             </TabItem>

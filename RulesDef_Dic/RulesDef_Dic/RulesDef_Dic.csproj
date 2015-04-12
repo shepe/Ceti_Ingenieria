@@ -82,9 +82,11 @@
     </Compile>
     <Compile Include="DictionaryVM.cs" />
     <Compile Include="Node.cs" />
+    <Compile Include="PrepValue.cs" />
     <Compile Include="Rules.cs">
       <DependentUpon>RulesModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="RulesClass.cs" />
     <Compile Include="RulesDef.cs">
       <DependentUpon>RulesModel.tt</DependentUpon>
     </Compile>

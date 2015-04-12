@@ -26,7 +26,7 @@ namespace RulesDef_Dic
             ContentTree = new List<Node>();
         }
 
-        public void GenTree(List<List<int>> listall, List<Node> Svalue, List<int> rev)
+        public void GenTree(List<RulesClass> listall, List<Node> Svalue, List<int> rev)
         {
             cont = 0;
             rev.Clear();
@@ -51,9 +51,9 @@ namespace RulesDef_Dic
 
                 foreach (var item in listall)
                 {
-                    if (item.Contains(sv.Value) || item.Contains(sv.Value * -1))
+                    if (item.list.Contains(sv.Value) || item.list.Contains(sv.Value * -1))
                     {
-                        foreach (var item2 in item)
+                        foreach (var item2 in item.list)
                         {
                             if (item2 != sv.Value && item2 != sv.Value * -1)
                             {
