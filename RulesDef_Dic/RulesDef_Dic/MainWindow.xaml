@@ -81,7 +81,7 @@
                     <ListBox x:Name="lstTree" HorizontalAlignment="Left" Height="227" Margin="10,85,0,0" VerticalAlignment="Top" Width="300"/>
                     <ListBox x:Name="lstExplanation" HorizontalAlignment="Left" Height="437" Margin="341,85,0,0" VerticalAlignment="Top" Width="421"/>
                     <TextBlock HorizontalAlignment="Left" Margin="10,64,0,0" TextWrapping="Wrap" Text="Desarrollo del Arbol" VerticalAlignment="Top"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="10,329,0,0" TextWrapping="Wrap" Text="Orden a preguntar y su valor (1 / 0)" VerticalAlignment="Top"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="10,329,0,0" TextWrapping="Wrap" Text="Orden a preguntar y su valor (Verdadero / Falso)" VerticalAlignment="Top"/>
                     <TextBlock HorizontalAlignment="Left" Margin="341,64,0,0" TextWrapping="Wrap" Text="Explicación" VerticalAlignment="Top"/>
 
                 </Grid>

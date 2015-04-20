@@ -2,13 +2,13 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 04/09/2015 01:40:11
--- Generated from EDMX file: H:\_CETI_Ingenieria_\6° Semestre\Sistemas Expertos\RulesDef_Dic\RulesDef_Dic\RulesModel.edmx
+-- Date Created: 04/12/2015 22:44:50
+-- Generated from EDMX file: C:\Users\user\Source\Repos\Ceti_Ingenieria\RulesDef_Dic\RulesDef_Dic\RulesModel.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
 GO
-USE [ModelFirst.Rules];
+USE [RulesDefDB];
 GO
 IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
 GO

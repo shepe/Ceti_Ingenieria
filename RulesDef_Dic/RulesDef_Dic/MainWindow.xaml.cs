@@ -557,12 +557,18 @@ namespace RulesDef_Dic
 
                 lstQuestionOrder.Items.Add(" \n Valores de las Proposiciones: \n ");
 
-                GettingValues(ValuesList);
+                GettingValues(ValuesList, ConvertToInt(cmbOProp.Text));
 
                 foreach (var item in ValuesList)
                 {
-                    lstQuestionOrder.Items.Add(ConvertToString(item.Prop) + " = " + ((item.Value > 0)?"Verdadero":"Falso"));
+                    if(item.Value == 0)
+                        lstQuestionOrder.Items.Add(ConvertToString(item.Prop) + " = " +  "Ni idea");
+                    else
+                        lstQuestionOrder.Items.Add(ConvertToString(item.Prop) + " = " + ((item.Value > 0)?"Verdadero" : "Falso"));
                 }
+
+                if (ValuesList.ElementAt(ValuesList.Count - 1).Value == 0)
+                    lstExplanation.Items.Add("Ni idea del valor de " + ConvertToString(ValuesList.ElementAt(ValuesList.Count - 1).Prop) + " PORQUE:");                
 
                 for (int i = RulesFired.Count - 1; i >= 0; i--)
                 {
@@ -645,42 +651,52 @@ namespace RulesDef_Dic
             }
         }
 
-        private void GettingValues(List<PropValue> ValuesList)
+        private void GettingValues(List<PropValue> ValuesList, int obj)
         {
             for (int i = 0; i < ValuesList.Count; i++)
             {
-                if (ValuesList.ElementAt(i).Value == 0)
+                if (ValuesList.ElementAt(i).Prop == obj || ValuesList.ElementAt(ValuesList.Count - 1).Value != 0)
+                    break;
+                else
                 {
-                    MessageBoxResult result = MessageBox.Show("La premisa " + ConvertToString(ValuesList.ElementAt(i).Prop) + " es verdadera", "Preguntando por su valor", MessageBoxButton.YesNo);
-                    ValuesList.ElementAt(i).AskForValue((result == MessageBoxResult.Yes) ? true : false);
-                    ValuesList.ElementAt(i).Who = "Tu me dijiste que ";
-                }
+                    if (ValuesList.ElementAt(i).Value == 0)
+                    {
+                        MessageBoxResult result = MessageBox.Show("La premisa " + ConvertToString(ValuesList.ElementAt(i).Prop) + " es verdadera", "Preguntando por su valor", MessageBoxButton.YesNo);
+                        ValuesList.ElementAt(i).AskForValue((result == MessageBoxResult.Yes) ? true : false);
+                        ValuesList.ElementAt(i).Who = "Tu me dijiste que ";
+                    }
 
-                evalValue(ValuesList.ElementAt(i).Prop * ValuesList.ElementAt(i).Value);
-                firesSomething(ValuesList);
+                    evalValue(ValuesList.ElementAt(i).Prop * ValuesList.ElementAt(i).Value);
+                    firesSomething(ValuesList);
+                }
             }
         }
 
         private void firesSomething(List<PropValue> ValuesList)
         {
-            foreach (var item in listall)
+            if (ValuesList.ElementAt(ValuesList.Count - 1).Value != 0)
+                return;
+            else
             {
-                if(item.list.Count == 1)
+                foreach (var item in listall)
                 {
-                    if(!RulesFired.Contains(item))
-                        RulesFired.Add(item);
-
-                    foreach (var item2 in ValuesList)
+                    if (item.list.Count == 1)
                     {
-                        if (item2.Prop == Math.Abs(item.list.ElementAt(0)))
-                        {
-                            item2.AskForValue((item.list.ElementAt(0) > 0)?true:false);
-                            item2.Who = "Yo deduje que ";
-                        }
-                    }
+                        if (!RulesFired.Contains(item))
+                            RulesFired.Add(item);
 
-                    evalValue(item.list.ElementAt(0));
-                    firesSomething(ValuesList);
+                        foreach (var item2 in ValuesList)
+                        {
+                            if (item2.Prop == Math.Abs(item.list.ElementAt(0)))
+                            {
+                                item2.AskForValue((item.list.ElementAt(0) > 0) ? true : false);
+                                item2.Who = "Yo deduje que ";
+                            }
+                        }
+
+                        evalValue(item.list.ElementAt(0));
+                        firesSomething(ValuesList);
+                    }
                 }
             }
         }
