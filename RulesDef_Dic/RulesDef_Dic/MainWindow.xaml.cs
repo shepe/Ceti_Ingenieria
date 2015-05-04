@@ -561,14 +561,14 @@ namespace RulesDef_Dic
 
                 foreach (var item in ValuesList)
                 {
-                    if(item.Value == 0)
-                        lstQuestionOrder.Items.Add(ConvertToString(item.Prop) + " = " +  "Ni idea");
+                    if (item.Value == 0)
+                        lstQuestionOrder.Items.Add(ConvertToString(item.Prop) + " = " + "Ni idea");
                     else
-                        lstQuestionOrder.Items.Add(ConvertToString(item.Prop) + " = " + ((item.Value > 0)?"Verdadero" : "Falso"));
+                        lstQuestionOrder.Items.Add(ConvertToString(item.Prop) + " = " + ((item.Value > 0) ? "Verdadero" : "Falso"));
                 }
 
                 if (ValuesList.ElementAt(ValuesList.Count - 1).Value == 0)
-                    lstExplanation.Items.Add("Ni idea del valor de " + ConvertToString(ValuesList.ElementAt(ValuesList.Count - 1).Prop) + " PORQUE:");                
+                    lstExplanation.Items.Add("Ni idea del valor de " + ConvertToString(ValuesList.ElementAt(ValuesList.Count - 1).Prop) + " PORQUE:");
 
                 for (int i = RulesFired.Count - 1; i >= 0; i--)
                 {

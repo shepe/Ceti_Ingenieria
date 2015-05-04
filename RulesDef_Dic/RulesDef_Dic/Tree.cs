@@ -28,8 +28,11 @@ namespace RulesDef_Dic
 
         public void GenTree(List<RulesClass> listall, List<Node> Svalue, List<int> rev)
         {
+            Boolean auxflag = false;
             cont = 0;
             rev.Clear();
+
+
             //for (int i = ite + 1; i < ite + cont + 1; i++)
             for (int i = 0; i < ContentTree.Count; i++)
             {
@@ -59,8 +62,18 @@ namespace RulesDef_Dic
                             {
                                 if (!rev.Contains(Math.Abs(item2)))
                                 {
-                                    sv.LevelDependencies.Add(new Node(Math.Abs(item2), sv.Level + 1));
-                                    //rev.Add(Math.Abs(item2));
+                                    foreach (var c in sv.LevelDependencies)
+                                    {
+                                        if (c.Value == Math.Abs(item2))
+                                            auxflag = true;
+                                    }
+
+                                    if (auxflag != true)
+                                        sv.LevelDependencies.Add(new Node(Math.Abs(item2), sv.Level + 1));
+                                        //rev.Add(Math.Abs(item2));
+                                    
+                                    auxflag = false;
+                                    
                                 }
                             }
                         }
